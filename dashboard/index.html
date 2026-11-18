@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>TOKEN LAUNCH RADAR</h1>
+    <p class="tagline">Protocols that record no token yet, ranked by what a token would be worth if their record held.</p>
+  </div>
+  <div class="topmeta">
+    <div><span class="k">Model</span><span class="v" id="m-version">—</span></div>
+    <div><span class="k">Snapshot</span><span class="v" id="m-asof">—</span></div>
+    <div><span class="k">Watchlist floor</span><span class="v num" id="m-floor">—</span></div>
+  </div>
+</header>
+
+<section class="stats" id="stats">
+  <div class="stat"><span class="sv num" id="s-protocols">—</span><span class="sk">protocols scanned</span></div>
+  <div class="stat"><span class="sv num" id="s-rows">—</span><span class="sk">pre-token rows ranked</span></div>
+  <div class="stat"><span class="sv num" id="s-watch">—</span><span class="sk">watchlist rows covered</span></div>
+  <div class="stat"><span class="sv num" id="s-tvl">—</span><span class="sk">board TVL covered</span></div>
+  <div class="stat"><span class="sv num" id="s-mult">—</span><span class="sk">median category multiple</span></div>
+</section>
+
+<section class="toolbar" aria-label="Filters">
+  <label class="fld grow"><span>Search</span><input id="q" type="search" placeholder="Protocol name or slug" autocomplete="off"></label>
+  <label class="fld"><span>Category</span><select id="cat"></select></label>
+  <label class="fld"><span>Chain</span><select id="chain"></select></label>
+  <label class="fld"><span>Min TVL</span><span class="rangewrap"><input id="mintvl" type="range" min="0" max="250000000" step="5000000" value="0"><output id="mintvlVal" class="num">any</output></span></label>
+  <label class="check"><input id="wlonly" type="checkbox"><span>Watchlist only</span></label>
+  <button id="reset" type="button">Reset</button>
+  <span class="count num" id="count">—</span>
+</section>
+
+<main class="layout">
+  <section class="boardwrap">
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-sort="rank" class="num sortable sorted-desc">#</th>
+          <th data-sort="name" class="sortable">Protocol</th>
+          <th data-sort="tvl" class="num sortable">TVL</th>
+          <th data-sort="chg" class="num sortable">7d %</th>
+          <th data-sort="val" class="num sortable">Implied value</th>
+          <th data-sort="mult" class="num sortable">Multiple</th>
+          <th data-sort="age" class="num sortable">Age</th>
+          <th class="num">Chains</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches the current filters.</p>
+  </section>
+
+  <aside class="detail" id="detail" aria-label="Protocol detail"></aside>
+</main>
+
+<section class="modelbox">
+  <h2>How the implied value is derived</h2>
+  <p id="modeltext">—</p>
+</section>
+
+<section class="livebox">
+  <h2>Already trading — set aside, used only as comparables</h2>
+  <p class="livenote">These protocols already record a token, so the board never ranks them. Their market-cap/TVL ratios, per category, are the multiples the model applies to the pre-token board.</p>
+  <table id="livetable">
+    <thead><tr><th>Protocol</th><th>Symbol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">MCap / TVL</th></tr></thead>
+    <tbody id="livetbody"></tbody>
+  </table>
+</section>
+
+<footer class="foot">
+  <span id="source">—</span>
+  <span>Implied value is this radar's own model output, not a prediction that a token will be issued.</span>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
