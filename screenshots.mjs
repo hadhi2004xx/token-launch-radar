@@ -55,6 +55,7 @@ runMain(false);
 const browser = await chromium.launch({ executablePath: headlessShell() });
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  // nosemgrep: javascript.playwright.security.audit.playwright-goto-injection.playwright-goto-injection -- the URL is a file:// path built from this script's own directory and a fixed out/dashboard/index.html suffix; no external input reaches it.
   await page.goto(`file://${join(outDir, 'dashboard', 'index.html')}`);
   await page.waitForSelector('#tbody tr');
   await page.waitForTimeout(150);
