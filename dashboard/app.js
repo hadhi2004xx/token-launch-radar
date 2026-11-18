@@ -33,7 +33,7 @@
   $('m-floor').textContent = fmtUSD(R.floor_usd);
   $('s-protocols').textContent = R.stats.protocols.toLocaleString('en-US');
   $('s-rows').textContent = R.stats.board_rows.toLocaleString('en-US');
-  $('s-watch').textContent = R.stats.watchlist_rows + ' / ' + R.stats.board_rows;
+  $('s-watch').textContent = R.stats.watchlist_rows + ' / ' + R.stats.watchlist_total;
   $('s-tvl').textContent = fmtUSD(R.stats.board_tvl_usd);
   $('s-mult').textContent = fmtX(R.stats.median_multiple);
   $('source').textContent = 'Snapshot: ' + R.source + ' · as of ' + R.as_of;

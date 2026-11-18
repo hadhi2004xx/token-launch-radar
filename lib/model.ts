@@ -381,9 +381,12 @@ export function farmSteps(p: SnapshotProtocol, age: number | null): string[] {
   } else {
     steps.push(`${actions.secondary}. Cost: ${WEEKLY_GAS[cls]}. Time: about 10 minutes a week.`);
   }
-  steps.push(
-    `Stay active for ${weeks} weeks: ${actions.secondary.charAt(0).toLowerCase()}${actions.secondary.slice(1)}, and never let a calendar month pass with no transaction. Cost: ${WEEKLY_GAS[cls]}. Time: about 10 minutes a week for ${weeks} weeks.`,
-  );
+  const cadence = [
+    `Keep the position live for ${weeks} weeks: one qualifying interaction a week (a deposit, repayment, swap, claim or vote, whichever the position uses), and never let a calendar month pass with no transaction`,
+    `Hold and tend the position for ${weeks} weeks: check it weekly, top up or rebalance in small amounts when the app rewards it, and keep at least one transaction in every calendar month`,
+    `Run the position for ${weeks} weeks before judging it: interact once a week in small size, claim whatever accrues, and keep the wallet's activity unbroken from month to month`,
+  ][hash % 3]!;
+  steps.push(`${cadence}. Cost: ${WEEKLY_GAS[cls]}. Time: about 10 minutes a week for ${weeks} weeks.`);
   if (hash % 3 !== 0) {
     steps.push(
       `Check ${p.name}'s own points, rewards or governance page every two weeks and claim only through links the protocol itself publishes. Cost: nothing to check, and never pay a fee to claim. Time: 5 minutes a fortnight.`,
@@ -444,6 +447,7 @@ export interface RadarData {
     protocols: number;
     board_rows: number;
     watchlist_rows: number;
+    watchlist_total: number;
     board_tvl_usd: number;
     median_multiple: number;
     categories: string[];
@@ -527,6 +531,7 @@ export function buildRadar(snapshot: Snapshot, model: ModelConstants = MODEL): {
       protocols: snapshot.protocols.length,
       board_rows: board.length,
       watchlist_rows: board.filter((r) => r.watchlist).length,
+      watchlist_total: snapshot.watchlist.length,
       board_tvl_usd: board.reduce((n, r) => n + r.tvl_usd, 0),
       median_multiple: round4(median(board.map((r) => r.model.category_multiple))),
       categories,
